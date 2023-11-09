@@ -19,6 +19,11 @@ sudo apt install tar
 #borrar versiones anteriores en tmp wordpress
 rm -rf /tmp/latest.tar
 rm -rf /tmp/wordpress
+rm -rf /var/www/html/wp-admin
+rm -rf /var/www/html/wp-content
+rm -rf /var/www/html/wp-includes
+
+
 
 #poner wordpress en tmp
 wget http://wordpress.org/latest.tar.gz -P /tmp
@@ -35,9 +40,9 @@ mv -f /tmp/wordpress/* /var/www/html
 #creamos la base de datos
 mysql -u root <<< "DROP DATABASE IF EXISTS $WORDPRESS_DB_NAME"
 mysql -u root <<< "CREATE DATABASE $WORDPRESS_DB_NAME"
-mysql -u root <<< "DROP USER IF EXISTS $WORDPRESS_DB_USER@$IP_CLIENTE_MYSQL"
-mysql -u root <<< "CREATE USER $WORDPRESS_DB_USER@$IP_CLIENTE_MYSQL IDENTIFIED BY '$WORDPRESS_DB_PASSWORD'"
-mysql -u root <<< "GRANT ALL PRIVILEGES ON $WORDPRESS_DB_NAME.* TO $WORDPRESS_DB_USER@$IP_CLIENTE_MYSQL"
+mysql -u root <<< "DROP USER IF EXISTS $WORDPRESS_DB_USER@'$IP_CLIENTE_MYSQL'"
+mysql -u root <<< "CREATE USER $WORDPRESS_DB_USER@'$IP_CLIENTE_MYSQL' IDENTIFIED BY '$WORDPRESS_DB_PASSWORD'"
+mysql -u root <<< "GRANT ALL PRIVILEGES ON $WORDPRESS_DB_NAME.* TO $WORDPRESS_DB_USER@'$IP_CLIENTE_MYSQL'"
 
 #Creamos un archivo de configuracion 
 cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
