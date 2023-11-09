@@ -3,7 +3,7 @@
 
 ![aws](https://github.com/LuzSerranoDiaz/Practica-01-05-daw/assets/125549381/5efad519-0b5d-49fb-84b0-920bee02954a)
 
-Se crea una instancia de Ubuntu 23.04 con sabor m1.medium para que no haya errores con la memoria ram.
+Se crea una instancia de Ubuntu 23.04 con sabor t2.micro (la gratuita) para que no haya errores con la memoria ram.
 
 Se utiliza el par de claves generadas en por aws.
 
