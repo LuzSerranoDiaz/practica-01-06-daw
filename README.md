@@ -114,6 +114,6 @@ sudo certbot \
 Con el comando `certbot --apache` realizamos el certificado y con estos siguientes parametros automatizamos el proceso:
 * `-m $CERTIFICATE_EMAIL` : indicamos la direccion de correo que en este caso es `demo@demo`
 * `--agree-tos` : indica que aceptamos los terminos de uso
-* `--no-eff-email` : indica que no queremos compartir nuestro email con la 'Electronic Frontier Foundation'
+* `--no-eff-email` : indica que no queremos compartir nuestro email con la 'Electronic Frontier Foundation' 
 * `-d $CERTIFICATE_DOMAIN` : indica el dominio, que en nuestro caso es 'practica-15.ddns.net', el dominio conseguido con el servicio de 'no-ip'
 * `--non-interactive` : indica que no solicite ningún tipo de dato de teclado.
