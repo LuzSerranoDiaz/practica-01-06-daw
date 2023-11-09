@@ -21,7 +21,7 @@ rm -rf /tmp/latest.tar
 rm -rf /tmp/wordpress
 
 #poner wordpress en tmp
-wget http://wordpress.org/latest.tar -P /tmp
+wget http://wordpress.org/latest.tar.gz -P /tmp
 
 #descomprimimos el archivo gz
 gunzip /tmp/latest.tar.gz
