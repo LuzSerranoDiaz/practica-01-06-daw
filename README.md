@@ -175,6 +175,14 @@ mysql -u root <<< "CREATE DATABASE $WORDPRESS_DB_NAME"
 mysql -u root <<< "DROP USER IF EXISTS $WORDPRESS_DB_USER@'$IP_CLIENTE_MYSQL'"
 mysql -u root <<< "CREATE USER $WORDPRESS_DB_USER@'$IP_CLIENTE_MYSQL' IDENTIFIED BY '$WORDPRESS_DB_PASSWORD'"
 mysql -u root <<< "GRANT ALL PRIVILEGES ON $WORDPRESS_DB_NAME.* TO $WORDPRESS_DB_USER@'$IP_CLIENTE_MYSQL'"
+```
+Creamos la base de datos con estos comandos, inyectando las sentencias directamente con `<<<`
+1. Destruye la BD(WORDPRESS_DB) si existe
+2. Crea la DB(WORDPRESS_DB)
+3. Destruye el usuario(WORDPRESS_USER) si existe
+4. Crea el usuario(WORDPRESS_USER) con su contraseña(root)
+5. Le da al usuario todos los permisos de la BD(WORDPRESS_DB) al usuario(WORDPRESS_USER) 
+```
 
 #Creamos un archivo de configuracion 
 cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
