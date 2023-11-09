@@ -117,3 +117,74 @@ Con el comando `certbot --apache` realizamos el certificado y con estos siguient
 * `--no-eff-email` : indica que no queremos compartir nuestro email con la 'Electronic Frontier Foundation' 
 * `-d $CERTIFICATE_DOMAIN` : indica el dominio, que en nuestro caso es 'practica-15.ddns.net', el dominio conseguido con el servicio de 'no-ip'
 * `--non-interactive` : indica que no solicite ningún tipo de dato de teclado.
+
+## deploy_wordpress_root_directory.sh
+```bash
+#!/bin/bash
+ 
+# Para mostrar los comandos que se van ejecutando (x) y parar en error(e)
+set -ex
+
+source .env
+
+# Actualizamos la lista de repositorios
+ apt update
+# ACtualizamos los paquetes del sistema
+# apt upgrade -y
+
+#instalamos zip
+sudo apt install zip -y
+
+#instalamos tar
+sudo apt install tar
+
+#borrar versiones anteriores en tmp wordpress
+rm -rf /tmp/latest.tar
+rm -rf /tmp/wordpress
+rm -rf /var/www/html/wp-admin
+rm -rf /var/www/html/wp-content
+rm -rf /var/www/html/wp-includes
+```
+Realizamos los pasos previos para que el proceso funcione
+1. Importamos .env
+2. Actualizamos los repositorios
+3. Instalamos zip
+4. Instalamos tar
+5. Borramos las versiones anteriores a wordpress que causarían problemas en instalaciones repetidas
+```bash
+#poner wordpress en tmp
+wget http://wordpress.org/latest.tar.gz -P /tmp
+
+#descomprimimos el archivo gz
+gunzip /tmp/latest.tar.gz
+
+#descomprimimos el archivo tar
+tar -xvf /tmp/latest.tar -C /tmp
+
+#Movemos wordpress 
+mv -f /tmp/wordpress/* /var/www/html
+```
+1. Descargamos el paquete de wordpress
+2. Descomprimimos el archivo `.gz`
+3. Descomprimos el archivo `.tar`
+4. Movemos los archivos de wordpress a `/var/www/html`
+```bash
+#creamos la base de datos
+mysql -u root <<< "DROP DATABASE IF EXISTS $WORDPRESS_DB_NAME"
+mysql -u root <<< "CREATE DATABASE $WORDPRESS_DB_NAME"
+mysql -u root <<< "DROP USER IF EXISTS $WORDPRESS_DB_USER@'$IP_CLIENTE_MYSQL'"
+mysql -u root <<< "CREATE USER $WORDPRESS_DB_USER@'$IP_CLIENTE_MYSQL' IDENTIFIED BY '$WORDPRESS_DB_PASSWORD'"
+mysql -u root <<< "GRANT ALL PRIVILEGES ON $WORDPRESS_DB_NAME.* TO $WORDPRESS_DB_USER@'$IP_CLIENTE_MYSQL'"
+
+#Creamos un archivo de configuracion 
+cp /var/www/html/wp-config-sample.php /var/www/html/wp-config.php
+
+#Configuramos el archivo wp-config.php
+sed -i "s/database_name_here/$WORDPRESS_DB_NAME/" /var/www/html/wp-config.php
+sed -i "s/username_here/$WORDPRESS_DB_USER/" /var/www/html/wp-config.php
+sed -i "s/password_here/$WORDPRESS_DB_PASSWORD/" /var/www/html/wp-config.php
+sed -i "s/localhost/$WORDPRESS_DB_HOST/" /var/www/html/wp-config.php
+
+#cambiamos el propietario y el grupo 
+chown -R www-data:www-data /var/www/html/
+```
