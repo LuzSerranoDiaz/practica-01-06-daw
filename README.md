@@ -192,6 +192,10 @@ sed -i "s/database_name_here/$WORDPRESS_DB_NAME/" /var/www/html/wp-config.php
 sed -i "s/username_here/$WORDPRESS_DB_USER/" /var/www/html/wp-config.php
 sed -i "s/password_here/$WORDPRESS_DB_PASSWORD/" /var/www/html/wp-config.php
 sed -i "s/localhost/$WORDPRESS_DB_HOST/" /var/www/html/wp-config.php
+```
+Creamos una archivo de configuracion a partir de uno de prueba en wordpress y lo configuramos con el comando `sed`, poniendo el nombre de la BD, el usuario, la contraseña y el host
+
+```bash
 
 #cambiamos el propietario y el grupo 
 chown -R www-data:www-data /var/www/html/
