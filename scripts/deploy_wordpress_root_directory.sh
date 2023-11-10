@@ -55,3 +55,12 @@ sed -i "s/localhost/$WORDPRESS_DB_HOST/" /var/www/html/wp-config.php
 
 #cambiamos el propietario y el grupo 
 chown -R www-data:www-data /var/www/html/
+
+#Habilitamos el modulo rewrite
+a2enmod rewrite
+
+#Creamos el archivo .htaccess en var/www/html
+cp ../htaccess/.htaccess /var/www/html/.htaccess
+
+
+systemctl restart apache2
